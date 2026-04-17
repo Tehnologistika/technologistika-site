@@ -1,49 +1,137 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, Home } from "lucide-react";
-import { useLocation } from "wouter";
+/*
+ * TECHNOLOGISTIKA — 404 Not Found Page
+ * Design: Editorial Swiss + Futuristic Alpine Industrial
+ * All copy in Russian, dark premium brand styling
+ */
+import { Link } from "wouter";
+import { ArrowLeft, MapPin } from "lucide-react";
 
 export default function NotFound() {
-  const [, setLocation] = useLocation();
-
-  const handleGoHome = () => {
-    setLocation("/");
-  };
-
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-      <Card className="w-full max-w-lg mx-4 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-        <CardContent className="pt-8 pb-8 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-red-100 rounded-full animate-pulse" />
-              <AlertCircle className="relative h-16 w-16 text-red-500" />
-            </div>
+    <div
+      style={{
+        backgroundColor: "#0F1115",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2rem",
+        textAlign: "center",
+      }}
+    >
+      {/* Logo */}
+      <Link href="/">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            marginBottom: "3rem",
+            cursor: "pointer",
+          }}
+        >
+          <div
+            style={{
+              width: "36px",
+              height: "36px",
+              background: "linear-gradient(135deg, #4FD1FF 0%, #2BA8D4 100%)",
+              borderRadius: "4px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M2 14L10 4L18 14" stroke="#0F1115" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M5 14L10 8L15 14" stroke="#0F1115" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.6"/>
+            </svg>
           </div>
+          <span
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 800,
+              fontSize: "1rem",
+              letterSpacing: "-0.02em",
+              color: "#F5F7FA",
+            }}
+          >
+            TECHNOLOGISTIKA
+          </span>
+        </div>
+      </Link>
 
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">404</h1>
+      {/* 404 number */}
+      <div
+        style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontWeight: 800,
+          fontSize: "clamp(5rem, 15vw, 10rem)",
+          letterSpacing: "-0.05em",
+          lineHeight: 1,
+          color: "rgba(79, 209, 255, 0.12)",
+          marginBottom: "1rem",
+          userSelect: "none",
+        }}
+      >
+        404
+      </div>
 
-          <h2 className="text-xl font-semibold text-slate-700 mb-4">
-            Page Not Found
-          </h2>
+      {/* Icon */}
+      <div
+        style={{
+          width: "56px",
+          height: "56px",
+          borderRadius: "50%",
+          backgroundColor: "rgba(79, 209, 255, 0.08)",
+          border: "1px solid rgba(79, 209, 255, 0.2)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: "1.5rem",
+        }}
+      >
+        <MapPin size={22} style={{ color: "#4FD1FF" }} />
+      </div>
 
-          <p className="text-slate-600 mb-8 leading-relaxed">
-            Sorry, the page you are looking for doesn't exist.
-            <br />
-            It may have been moved or deleted.
-          </p>
+      <h1
+        style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontWeight: 800,
+          fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+          letterSpacing: "-0.03em",
+          color: "#F5F7FA",
+          marginBottom: "1rem",
+        }}
+      >
+        Маршрут не найден
+      </h1>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              onClick={handleGoHome}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
-            >
-              <Home className="w-4 h-4 mr-2" />
-              Go Home
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <p
+        style={{
+          color: "#AAB3C2",
+          fontSize: "1rem",
+          lineHeight: 1.65,
+          maxWidth: "400px",
+          marginBottom: "2.5rem",
+        }}
+      >
+        Страница, которую вы ищете, не существует или была перемещена. Вернитесь на главную.
+      </p>
+
+      <Link href="/">
+        <button
+          className="btn-primary"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <ArrowLeft size={16} />
+          На главную
+        </button>
+      </Link>
     </div>
   );
 }

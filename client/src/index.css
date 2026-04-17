@@ -1,3 +1,25 @@
+/*
+ * TECHNOLOGISTIKA — Global Design System
+ * Design Philosophy: Editorial Swiss + Futuristic Alpine Industrial
+ * 
+ * Color System:
+ *   Background:        #0F1115  (deep charcoal)
+ *   Surface:           #161A20  (elevated surface)
+ *   Surface 2:         #1C2028  (card surface)
+ *   Primary text:      #F5F7FA  (near-white)
+ *   Secondary text:    #AAB3C2  (muted slate)
+ *   Tertiary text:     #C9D4E3  (light slate)
+ *   Accent (primary):  #4FD1FF  (electric cyan)
+ *   Accent (warm):     #F5B74F  (amber highlight)
+ *   Border:            rgba(255,255,255,0.07)
+ *   Border accent:     rgba(79, 209, 255, 0.2)
+ * 
+ * Typography:
+ *   Display:   Space Grotesk (weight 700–800)
+ *   Body:      Inter (weight 400–500)
+ *   Mono/Label: Space Mono (weight 400–700)
+ */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -43,83 +65,97 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --radius: 0.375rem;
+
+  /* Technologistika dark theme */
+  --background: oklch(0.115 0.008 260);
+  --foreground: oklch(0.96 0.005 220);
+  --card: oklch(0.145 0.009 255);
+  --card-foreground: oklch(0.96 0.005 220);
+  --popover: oklch(0.145 0.009 255);
+  --popover-foreground: oklch(0.96 0.005 220);
+
+  /* Accent: #4FD1FF → oklch */
+  --primary: oklch(0.78 0.12 210);
+  --primary-foreground: oklch(0.1 0.01 260);
+
+  --secondary: oklch(0.19 0.01 255);
+  --secondary-foreground: oklch(0.82 0.01 220);
+  --muted: oklch(0.19 0.01 255);
+  --muted-foreground: oklch(0.65 0.015 225);
+  --accent: oklch(0.78 0.12 210);
+  --accent-foreground: oklch(0.1 0.01 260);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --border: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.78 0.12 210);
+
+  --chart-1: oklch(0.78 0.12 210);
+  --chart-2: oklch(0.7 0.1 200);
+  --chart-3: oklch(0.6 0.08 195);
+  --chart-4: oklch(0.5 0.06 190);
+  --chart-5: oklch(0.4 0.04 185);
+
+  --sidebar: oklch(0.145 0.009 255);
+  --sidebar-foreground: oklch(0.96 0.005 220);
+  --sidebar-primary: oklch(0.78 0.12 210);
+  --sidebar-primary-foreground: oklch(0.1 0.01 260);
+  --sidebar-accent: oklch(0.19 0.01 255);
+  --sidebar-accent-foreground: oklch(0.96 0.005 220);
+  --sidebar-border: oklch(1 0 0 / 7%);
+  --sidebar-ring: oklch(0.78 0.12 210);
 }
 
+/* Force dark theme always */
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
+  --background: oklch(0.115 0.008 260);
+  --foreground: oklch(0.96 0.005 220);
+  --card: oklch(0.145 0.009 255);
+  --card-foreground: oklch(0.96 0.005 220);
+  --popover: oklch(0.145 0.009 255);
+  --popover-foreground: oklch(0.96 0.005 220);
+  --primary: oklch(0.78 0.12 210);
+  --primary-foreground: oklch(0.1 0.01 260);
+  --secondary: oklch(0.19 0.01 255);
+  --secondary-foreground: oklch(0.82 0.01 220);
+  --muted: oklch(0.19 0.01 255);
+  --muted-foreground: oklch(0.65 0.015 225);
+  --accent: oklch(0.78 0.12 210);
+  --accent-foreground: oklch(0.1 0.01 260);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --border: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.78 0.12 210);
+  --sidebar: oklch(0.145 0.009 255);
+  --sidebar-foreground: oklch(0.96 0.005 220);
+  --sidebar-accent: oklch(0.19 0.01 255);
+  --sidebar-accent-foreground: oklch(0.96 0.005 220);
+  --sidebar-border: oklch(1 0 0 / 7%);
+  --sidebar-ring: oklch(0.78 0.12 210);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    background-color: #0F1115;
+    color: #F5F7FA;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
   }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -131,28 +167,22 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+
+  /* Remove default focus outline, use custom */
+  *:focus-visible {
+    outline: 2px solid rgba(79, 209, 255, 0.5);
+    outline-offset: 2px;
+  }
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
+  /* Container */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .flex {
@@ -162,16 +192,299 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      max-width: 1280px;
     }
+  }
+
+  /* ─── Typography Utilities ─── */
+  .display-lg {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+  }
+
+  .display-md {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.875rem, 3.5vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .display-sm {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  .label-mono {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #AAB3C2;
+  }
+
+  /* ─── Section Badge ─── */
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3125rem 0.75rem;
+    background-color: rgba(79, 209, 255, 0.08);
+    border: 1px solid rgba(79, 209, 255, 0.2);
+    border-radius: 0.125rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4FD1FF;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ─── Buttons ─── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.625rem;
+    background: linear-gradient(135deg, #4FD1FF 0%, #2BA8D4 100%);
+    color: #0A0D10;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #6DDAFF 0%, #3BBDE8 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(79, 209, 255, 0.25);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.625rem;
+    background: transparent;
+    color: #F5F7FA;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* ─── Cards ─── */
+  .card-dark {
+    background-color: #161A20;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .card-dark:hover {
+    border-color: rgba(79, 209, 255, 0.2);
+    background-color: #1C2028;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ─── Form Fields ─── */
+  .field-dark {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    color: #F5F7FA;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .field-dark::placeholder {
+    color: rgba(170, 179, 194, 0.5);
+  }
+
+  .field-dark:focus {
+    border-color: rgba(79, 209, 255, 0.5);
+    background-color: rgba(79, 209, 255, 0.04);
+    box-shadow: 0 0 0 3px rgba(79, 209, 255, 0.08);
+  }
+
+  .field-dark.error {
+    border-color: rgba(239, 68, 68, 0.5);
+  }
+
+  .field-dark.error:focus {
+    border-color: rgba(239, 68, 68, 0.7);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+  }
+
+  /* Select arrow */
+  select.field-dark {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%23AAB3C2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  select.field-dark option {
+    background-color: #1C2028;
+    color: #F5F7FA;
+  }
+
+  /* ─── Trust Badge ─── */
+  .trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3125rem 0.75rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.125rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    color: #C9D4E3;
+  }
+
+  /* ─── Stat number ─── */
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    letter-spacing: -0.03em;
+    color: #F5F7FA;
+    line-height: 1;
+  }
+
+  /* ─── Nav link ─── */
+  .nav-link {
+    transition: color 0.15s ease;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: #F5F7FA !important;
+  }
+
+  /* ─── Responsive grid helpers ─── */
+  @media (min-width: 640px) {
+    .sm\:grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .sm\:grid-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .md\:grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .md\:hidden {
+      display: none;
+    }
+    .hidden.md\:flex {
+      display: flex;
+    }
+    .hidden.md\:block {
+      display: block;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lg\:grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .lg\:grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .lg\:grid-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .lg\:col-span-1 {
+      grid-column: span 1;
+    }
+  }
+
+  /* ─── Utility ─── */
+  .py-5 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+  .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+  .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+
+  /* ─── Scrollbar ─── */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0F1115;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(79, 209, 255, 0.2);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(79, 209, 255, 0.4);
+  }
+
+  /* ─── Selection ─── */
+  ::selection {
+    background: rgba(79, 209, 255, 0.2);
+    color: #F5F7FA;
+  }
+
+  /* ─── Topographic SVG background utility ─── */
+  .topo-bg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Cg fill='none' stroke='rgba(79,209,255,0.04)' stroke-width='1'%3E%3Cellipse cx='300' cy='200' rx='280' ry='180'/%3E%3Cellipse cx='300' cy='200' rx='240' ry='150'/%3E%3Cellipse cx='300' cy='200' rx='200' ry='120'/%3E%3Cellipse cx='300' cy='200' rx='160' ry='90'/%3E%3Cellipse cx='300' cy='200' rx='120' ry='60'/%3E%3Cellipse cx='300' cy='200' rx='80' ry='30'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 50% auto;
   }
 }
