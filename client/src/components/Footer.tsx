@@ -123,20 +123,52 @@ export default function Footer() {
               Контакты
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-              <a
-                href={CONTACTS.phoneHref}
-                style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "#F5F7FA", textDecoration: "none", fontSize: "0.9375rem", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
-              >
-                <Phone size={15} style={{ color: "#4FD1FF", flexShrink: 0 }} />
-                {CONTACTS.phone}
-              </a>
-              <a
-                href={CONTACTS.emailHref}
-                style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "#AAB3C2", textDecoration: "none", fontSize: "0.875rem" }}
-              >
-                <Mail size={15} style={{ color: "#4FD1FF", flexShrink: 0 }} />
-                {CONTACTS.email}
-              </a>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                <Phone size={15} style={{ color: "#4FD1FF", flexShrink: 0, marginTop: "3px" }} />
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <a
+                    href={CONTACTS.phoneHref}
+                    style={{ color: "#F5F7FA", textDecoration: "none", fontSize: "0.9375rem", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
+                  >
+                    {CONTACTS.phone}
+                    <span style={{ display: "block", color: "#AAB3C2", fontSize: "0.6875rem", fontWeight: 400, fontFamily: "'Space Mono', monospace", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: "2px" }}>
+                      {CONTACTS.phoneLabel}
+                    </span>
+                  </a>
+                  <a
+                    href={CONTACTS.phoneReserveHref}
+                    style={{ color: "#AAB3C2", textDecoration: "none", fontSize: "0.875rem", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
+                  >
+                    {CONTACTS.phoneReserve}
+                    <span style={{ display: "block", color: "#AAB3C2", fontSize: "0.6875rem", fontWeight: 400, fontFamily: "'Space Mono', monospace", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: "2px" }}>
+                      {CONTACTS.phoneReserveLabel}
+                    </span>
+                  </a>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                <Mail size={15} style={{ color: "#4FD1FF", flexShrink: 0, marginTop: "3px" }} />
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <a
+                    href={CONTACTS.emailHref}
+                    style={{ color: "#AAB3C2", textDecoration: "none", fontSize: "0.875rem" }}
+                  >
+                    {CONTACTS.email}
+                    <span style={{ display: "block", color: "#AAB3C2", fontSize: "0.6875rem", fontFamily: "'Space Mono', monospace", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: "2px" }}>
+                      {CONTACTS.emailLabel}
+                    </span>
+                  </a>
+                  <a
+                    href={CONTACTS.emailDocsHref}
+                    style={{ color: "#AAB3C2", textDecoration: "none", fontSize: "0.875rem" }}
+                  >
+                    {CONTACTS.emailDocs}
+                    <span style={{ display: "block", color: "#AAB3C2", fontSize: "0.6875rem", fontFamily: "'Space Mono', monospace", letterSpacing: "0.04em", textTransform: "uppercase", marginTop: "2px" }}>
+                      {CONTACTS.emailDocsLabel}
+                    </span>
+                  </a>
+                </div>
+              </div>
               <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", color: "#AAB3C2", fontSize: "0.875rem" }}>
                 <MapPin size={15} style={{ color: "#4FD1FF", flexShrink: 0, marginTop: "2px" }} />
                 <span>{CONTACTS.address}</span>

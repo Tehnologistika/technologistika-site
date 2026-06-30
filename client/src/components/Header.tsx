@@ -9,9 +9,24 @@ import { Menu, X, Phone } from "lucide-react";
 import { CONTACTS, NAV_LINKS } from "@/lib/constants";
 
 export default function Header() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // Navigate/scroll to the lead/calculator form on the home page
+  const goToCalculator = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    const scroll = () =>
+      document.getElementById("calculator")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (location === "/") {
+      scroll();
+    } else {
+      setLocation("/");
+      // Wait for the home page to mount before scrolling
+      setTimeout(scroll, 120);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -119,11 +134,11 @@ export default function Header() {
                 <Phone size={15} style={{ color: "#4FD1FF" }} />
                 {CONTACTS.phone}
               </a>
-              <Link href="/#calculator">
+              <a href="/#calculator" onClick={goToCalculator}>
                 <button className="btn-primary" style={{ padding: "0.625rem 1.25rem", fontSize: "0.875rem" }}>
                   Рассчитать ориентировочно
                 </button>
-              </Link>
+              </a>
             </div>
 
             {/* Mobile hamburger */}
@@ -204,11 +219,11 @@ export default function Header() {
               <Phone size={18} style={{ color: "#4FD1FF" }} />
               {CONTACTS.phone}
             </a>
-            <Link href="/#calculator">
+            <a href="/#calculator" onClick={goToCalculator}>
               <button className="btn-primary w-full justify-center" style={{ width: "100%" }}>
                 Рассчитать ориентировочно
               </button>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

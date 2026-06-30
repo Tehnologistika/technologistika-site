@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Calculator from "@/components/Calculator";
 import { CONTACTS, STATS, SERVICES, ADVANTAGES, TESTIMONIALS } from "@/lib/constants";
+import logoWatermark from "@/assets/technologistika-logo-transparent.png";
 
 // Intersection observer hook for scroll animations
 function useInView(threshold = 0.15) {
@@ -75,6 +76,12 @@ export default function Home() {
   const brandSection = useInView(0.1);
   const testimonialsSection = useInView(0.1);
 
+  // Smooth-scroll to the lead/calculator form (used by all "Рассчитать ориентировочно" CTAs)
+  const scrollToCalculator = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.getElementById("calculator")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div style={{ backgroundColor: "#0F1115", minHeight: "100vh" }}>
       <Header />
@@ -123,6 +130,39 @@ export default function Home() {
           }}
         />
 
+        {/* Brand logo — small, neat badge in the top-right corner of the hero, below the header */}
+        <div
+          className="hero-logo-badge"
+          style={{
+            position: "absolute",
+            top: "92px",
+            right: "2rem",
+            zIndex: 2,
+            width: "84px",
+            height: "84px",
+            borderRadius: "9999px",
+            backgroundColor: "rgba(248, 250, 252, 0.96)",
+            border: "1px solid rgba(79, 209, 255, 0.45)",
+            boxShadow: "0 0 0 1px rgba(79, 209, 255, 0.12), 0 6px 18px rgba(0, 0, 0, 0.35)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          <img
+            src={logoWatermark}
+            alt="Логотип Technologistika"
+            style={{
+              width: "68%",
+              height: "68%",
+              objectFit: "contain",
+              opacity: 1,
+            }}
+          />
+        </div>
+
         <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: "5rem", paddingBottom: "5rem" }}>
           <div
             ref={heroSection.ref}
@@ -170,7 +210,7 @@ export default function Home() {
 
             {/* CTAs */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
-              <a href="#calculator">
+              <a href="#calculator" onClick={scrollToCalculator}>
                 <button className="btn-primary">
                   Рассчитать ориентировочно
                   <ArrowRight size={16} />
@@ -630,7 +670,7 @@ export default function Home() {
               Рассчитайте стоимость онлайн или позвоните — ответим в течение нескольких минут.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
-              <a href="#calculator">
+              <a href="#calculator" onClick={scrollToCalculator}>
                 <button className="btn-primary">
                   Рассчитать ориентировочно
                   <ArrowRight size={16} />

@@ -4,14 +4,26 @@
  */
 
 export const CONTACTS = {
-  phone: "+7 916 597-2218",
-  phoneHref: "tel:+79165972218",
+  // Основная линия — единая линия заявок
+  phone: "+7 993 157-22-18",
+  phoneHref: "tel:+79931572218",
+  phoneLabel: "Единая линия заявок",
+  // Резервная линия связи
+  phoneReserve: "+7 901 830-03-09",
+  phoneReserveHref: "tel:+79018300309",
+  phoneReserveLabel: "Резервная линия связи",
+  // Email для заявок и расчёта
   email: "mail@technologistika.online",
   emailHref: "mailto:mail@technologistika.online",
+  emailLabel: "Заявки и расчёт перевозки",
+  // Email для документов и закрывающих
+  emailDocs: "inbox@technologistika.online",
+  emailDocsHref: "mailto:inbox@technologistika.online",
+  emailDocsLabel: "Документы и закрывающие",
   address: "Москва, пер. Уланский, д. 22, стр. 1, помещ. 41Н",
   telegram: "https://t.me/technologistika",
   telegramHandle: "@technologistika",
-  whatsapp: "https://wa.me/79165972218",
+  whatsapp: "https://wa.me/79931572218",
 };
 
 export const NAV_LINKS = [

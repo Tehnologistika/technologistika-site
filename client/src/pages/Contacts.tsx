@@ -81,13 +81,22 @@ export default function Contacts() {
                 <Phone size={20} style={{ color: "#4FD1FF" }} />
               </div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6875rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#AAB3C2", marginBottom: "0.5rem" }}>
-                Телефон
+                {CONTACTS.phoneLabel}
               </div>
               <a
                 href={CONTACTS.phoneHref}
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.25rem", color: "#F5F7FA", textDecoration: "none", letterSpacing: "-0.02em", display: "block", marginBottom: "0.5rem" }}
+                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.25rem", color: "#F5F7FA", textDecoration: "none", letterSpacing: "-0.02em", display: "block", marginBottom: "1rem" }}
               >
                 {CONTACTS.phone}
+              </a>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6875rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#AAB3C2", marginBottom: "0.5rem" }}>
+                {CONTACTS.phoneReserveLabel}
+              </div>
+              <a
+                href={CONTACTS.phoneReserveHref}
+                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.125rem", color: "#F5F7FA", textDecoration: "none", letterSpacing: "-0.02em", display: "block", marginBottom: "0.75rem" }}
+              >
+                {CONTACTS.phoneReserve}
               </a>
               <p style={{ color: "#AAB3C2", fontSize: "0.875rem" }}>
                 Звонки принимаем ежедневно с 8:00 до 22:00 (МСК)
@@ -100,13 +109,22 @@ export default function Contacts() {
                 <Mail size={20} style={{ color: "#4FD1FF" }} />
               </div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6875rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#AAB3C2", marginBottom: "0.5rem" }}>
-                Email
+                {CONTACTS.emailLabel}
               </div>
               <a
                 href={CONTACTS.emailHref}
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "1rem", color: "#F5F7FA", textDecoration: "none", display: "block", marginBottom: "0.5rem" }}
+                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "1rem", color: "#F5F7FA", textDecoration: "none", display: "block", marginBottom: "1rem" }}
               >
                 {CONTACTS.email}
+              </a>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6875rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#AAB3C2", marginBottom: "0.5rem" }}>
+                {CONTACTS.emailDocsLabel}
+              </div>
+              <a
+                href={CONTACTS.emailDocsHref}
+                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "1rem", color: "#F5F7FA", textDecoration: "none", display: "block", marginBottom: "0.75rem" }}
+              >
+                {CONTACTS.emailDocs}
               </a>
               <p style={{ color: "#AAB3C2", fontSize: "0.875rem" }}>
                 Ответим в течение нескольких часов в рабочее время
@@ -167,7 +185,7 @@ export default function Contacts() {
                 {CONTACTS.address}
               </div>
               <p style={{ color: "#AAB3C2", fontSize: "0.875rem" }}>
-                Кабардино-Балкарская Республика
+                Юридический адрес
               </p>
             </div>
 
