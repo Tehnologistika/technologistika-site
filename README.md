@@ -85,6 +85,8 @@ cp .env.example .env
 | `PORT`         | Порт Express-сервера                         | `3000`                         |
 | `SITE_DOMAIN`  | Основной домен сайта                         | `технологист.рф`               |
 | `AYUB_API_URL` | Адрес внешнего API (поддомен `ayub`)         | `https://ayub.технологист.рф`  |
+| `TELEGRAM_BOT_TOKEN`     | Токен Telegram-бота для отправки заявок с формы | `123456:ABC-DEF...`        |
+| `TELEGRAM_LEADS_CHAT_ID` | ID чата/группы, куда приходят заявки            | `-1001234567890`           |
 
 ## Деплой
 
