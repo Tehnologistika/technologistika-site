@@ -458,6 +458,20 @@
   .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
   .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
 
+  /* ─── Hero logo badge ─── */
+  .hero-logo-badge {
+    width: 84px;
+    height: 84px;
+  }
+  @media (max-width: 640px) {
+    .hero-logo-badge {
+      width: 60px !important;
+      height: 60px !important;
+      top: 80px !important;
+      right: 1rem !important;
+    }
+  }
+
   /* ─── Scrollbar ─── */
   ::-webkit-scrollbar {
     width: 6px;

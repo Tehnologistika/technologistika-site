@@ -4,7 +4,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
-import { ArrowRight, Truck, Users, MapPin, Shield, Phone } from "lucide-react";
+import { ArrowRight, Truck, Users, MapPin, Shield, Phone, Route, ShieldCheck, FileText, Scale, Mountain, Compass, HeartHandshake } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CONTACTS } from "@/lib/constants";
@@ -29,6 +29,8 @@ export default function About() {
   const heroSection = useInView(0.1);
   const missionSection = useInView(0.1);
   const valuesSection = useInView(0.1);
+  const yarusySection = useInView(0.1);
+  const rolesSection = useInView(0.1);
   const teamSection = useInView(0.1);
 
   useEffect(() => {
@@ -189,10 +191,10 @@ export default function About() {
                   Кавказ. Эльбрус.<br />Сила маршрута.
                 </h2>
                 <p style={{ color: "#C9D4E3", fontSize: "1rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
-                  Technologistika берёт начало в Кабардино-Балкарии — регионе, где сила гор сочетается с точностью маршрутов. Эта идентичность определяет наш характер: надёжность, выносливость, движение без остановок.
+                  ТехноЛогистика родилась из идеи соединить технологичность современной логистики с характером гор. Наш символ — Эльбрус. Для нас это не просто образ на логотипе, а внутренняя планка: устойчивость, высота, ответственность и движение вперёд.
                 </p>
                 <p style={{ color: "#AAB3C2", fontSize: "1rem", lineHeight: 1.7 }}>
-                  Как Эльбрус остаётся неизменным ориентиром на горизонте, мы остаёмся надёжной точкой отсчёта для тех, кто доверяет нам своё самое ценное. Мы не просто перевозим автомобили — мы несём ответственность за каждый километр пути.
+                  Корни компании связаны с Кабардино-Балкарией — местом, где уважение к слову, дороге и человеку имеет особое значение. Поэтому мы строим логистику не как холодный поток заявок, а как систему доверия, ответственности и сопровождения.
                 </p>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
@@ -208,6 +210,88 @@ export default function About() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Ярусы — внутренняя структура */}
+      <section style={{ paddingTop: "6rem", paddingBottom: "6rem", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container">
+          <div
+            ref={yarusySection.ref}
+            style={{
+              opacity: yarusySection.inView ? 1 : 0,
+              transform: yarusySection.inView ? "translateY(0)" : "translateY(24px)",
+              transition: "all 0.6s ease-out",
+            }}
+          >
+            <div style={{ maxWidth: "620px", marginBottom: "3rem" }}>
+              <div className="section-badge">Внутренняя структура</div>
+              <h2 className="display-md" style={{ color: "#F5F7FA", marginBottom: "1.25rem" }}>
+                У нас нет отделов —<br />у нас Ярусы
+              </h2>
+              <p style={{ color: "#AAB3C2", fontSize: "1rem", lineHeight: 1.7 }}>
+                Каждый Ярус отвечает за свой уровень движения заявки — от первого обращения до выдачи автомобиля клиенту. Вместе они держат маршрут под контролем на всей высоте.
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }} className="sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { icon: <Route size={20} style={{ color: "#4FD1FF" }} />, title: "Ярус Путь", desc: "Операционная логистика и сопровождение рейсов." },
+                { icon: <ShieldCheck size={20} style={{ color: "#4FD1FF" }} />, title: "Ярус Щит", desc: "Проверка перевозчиков и безопасность сделки." },
+                { icon: <FileText size={20} style={{ color: "#4FD1FF" }} />, title: "Ярус Кодекс", desc: "Договоры, документы и правовая чистота." },
+                { icon: <Scale size={20} style={{ color: "#4FD1FF" }} />, title: "Ярус Баланс", desc: "Оплаты, закрывающие документы и финансовая дисциплина." },
+                { icon: <Mountain size={20} style={{ color: "#4FD1FF" }} />, title: "Ярус Пик", desc: "Стратегия, аналитика и развитие системы." },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: "1rem", padding: "1.5rem", backgroundColor: "#161A20", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "0.375rem" }}>
+                  <div style={{ width: "40px", height: "40px", borderRadius: "0.25rem", backgroundColor: "rgba(79, 209, 255, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h4 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1rem", color: "#F5F7FA", marginBottom: "0.375rem", letterSpacing: "-0.01em" }}>{item.title}</h4>
+                    <p style={{ color: "#AAB3C2", fontSize: "0.875rem", lineHeight: 1.55 }}>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Роли команды */}
+      <section style={{ paddingTop: "6rem", paddingBottom: "6rem", backgroundColor: "#161A20", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="container">
+          <div
+            ref={rolesSection.ref}
+            style={{
+              opacity: rolesSection.inView ? 1 : 0,
+              transform: rolesSection.inView ? "translateY(0)" : "translateY(24px)",
+              transition: "all 0.6s ease-out",
+            }}
+          >
+            <div style={{ maxWidth: "620px", marginBottom: "3rem" }}>
+              <div className="section-badge">Команда</div>
+              <h2 className="display-md" style={{ color: "#F5F7FA", marginBottom: "1.25rem" }}>
+                Мы называем команду<br />не просто логистами
+              </h2>
+              <p style={{ color: "#AAB3C2", fontSize: "1rem", lineHeight: 1.7 }}>
+                За каждой заявкой стоят люди, у которых есть роль и ответственность за результат, а не строка в штатном расписании.
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }} className="sm:grid-cols-3">
+              {[
+                { icon: <Compass size={22} style={{ color: "#4FD1FF" }} />, title: "Навигаторы", desc: "Помогают выбрать маршрут и решение." },
+                { icon: <Truck size={22} style={{ color: "#4FD1FF" }} />, title: "Драйверы", desc: "Находят возможности движения там, где другие видят тупик." },
+                { icon: <HeartHandshake size={22} style={{ color: "#4FD1FF" }} />, title: "Кураторы рейсов", desc: "Сопровождают перевозку до результата." },
+              ].map((item, i) => (
+                <div key={i} style={{ padding: "1.75rem", backgroundColor: "#1C2028", border: "1px solid rgba(79, 209, 255, 0.1)", borderRadius: "0.375rem" }}>
+                  <div style={{ width: "44px", height: "44px", borderRadius: "0.375rem", backgroundColor: "rgba(79, 209, 255, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem" }}>
+                    {item.icon}
+                  </div>
+                  <h4 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.125rem", color: "#F5F7FA", marginBottom: "0.5rem", letterSpacing: "-0.01em" }}>{item.title}</h4>
+                  <p style={{ color: "#AAB3C2", fontSize: "0.9375rem", lineHeight: 1.6 }}>{item.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
