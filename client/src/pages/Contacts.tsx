@@ -183,7 +183,7 @@ export default function Contacts() {
                 Пн–Вс: 8:00 – 22:00
               </div>
               <p style={{ color: "#AAB3C2", fontSize: "0.875rem" }}>
-                GPS-мониторинг перевозок — круглосуточно
+                Сопровождение перевозки — до выдачи авто
               </p>
             </div>
           </div>
