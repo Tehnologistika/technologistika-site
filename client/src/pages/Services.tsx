@@ -243,7 +243,7 @@ export default function Services() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
               <Link href="/#calculator">
                 <button className="btn-primary">
-                  Рассчитать стоимость
+                  Рассчитать ориентировочно
                   <ArrowRight size={16} />
                 </button>
               </Link>

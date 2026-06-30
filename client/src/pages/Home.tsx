@@ -172,7 +172,7 @@ export default function Home() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
               <a href="#calculator">
                 <button className="btn-primary">
-                  Рассчитать стоимость
+                  Рассчитать ориентировочно
                   <ArrowRight size={16} />
                 </button>
               </a>
@@ -316,10 +316,10 @@ export default function Home() {
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <div className="section-badge">Расчёт стоимости</div>
               <h2 className="display-md" style={{ color: "#F5F7FA", marginBottom: "1.25rem" }}>
-                Узнайте стоимость<br />перевозки за 15 минут
+                Ориентировочный<br />расчёт перевозки
               </h2>
               <p style={{ color: "#AAB3C2", fontSize: "1rem", lineHeight: 1.65, marginBottom: "2rem" }}>
-                Укажите маршрут и тип автомобиля — наш менеджер перезвонит и назовёт точную цену. Без скрытых доплат, с договором и страховкой.
+                Укажите маршрут и автомобиль — менеджер свяжется с вами и подтвердит окончательную стоимость после проверки маршрута, состояния авто и наличия места на автовозе. Без скрытых доплат, с договором и страховкой.
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                 {[
@@ -350,7 +350,7 @@ export default function Home() {
               }}
             >
               <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.25rem", color: "#F5F7FA", letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>
-                Рассчитать стоимость
+                Заявка на расчёт
               </h3>
               <Calculator />
             </div>
@@ -632,7 +632,7 @@ export default function Home() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
               <a href="#calculator">
                 <button className="btn-primary">
-                  Рассчитать стоимость
+                  Рассчитать ориентировочно
                   <ArrowRight size={16} />
                 </button>
               </a>

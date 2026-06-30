@@ -216,10 +216,10 @@ export default function Contacts() {
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <div className="section-badge">Быстрая заявка</div>
               <h2 className="display-md" style={{ color: "#F5F7FA", marginBottom: "1.25rem" }}>
-                Рассчитайте стоимость<br />прямо сейчас
+                Оставьте заявку<br />на расчёт
               </h2>
               <p style={{ color: "#AAB3C2", fontSize: "1rem", lineHeight: 1.65 }}>
-                Заполните форму — менеджер перезвонит в течение 15 минут и назовёт точную стоимость перевозки. Без скрытых доплат, с договором и страховкой.
+                Заполните форму — менеджер свяжется с вами и подтвердит окончательную стоимость после проверки маршрута, состояния автомобиля и наличия места на автовозе. Без скрытых доплат, с договором и страховкой.
               </p>
             </div>
             <div style={{ backgroundColor: "#1C2028", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "0.5rem", padding: "2rem" }}>
