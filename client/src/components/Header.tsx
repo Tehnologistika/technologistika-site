@@ -121,7 +121,7 @@ export default function Header() {
               </a>
               <Link href="/#calculator">
                 <button className="btn-primary" style={{ padding: "0.625rem 1.25rem", fontSize: "0.875rem" }}>
-                  Рассчитать стоимость
+                  Рассчитать ориентировочно
                 </button>
               </Link>
             </div>
@@ -206,7 +206,7 @@ export default function Header() {
             </a>
             <Link href="/#calculator">
               <button className="btn-primary w-full justify-center" style={{ width: "100%" }}>
-                Рассчитать стоимость
+                Рассчитать ориентировочно
               </button>
             </Link>
           </div>
