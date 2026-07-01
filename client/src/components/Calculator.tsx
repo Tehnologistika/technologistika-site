@@ -8,17 +8,22 @@ import { useState } from "react";
 import { CheckCircle, ArrowRight, Loader2 } from "lucide-react";
 
 type DriveStatus = "yes" | "no" | "uncertain";
+type ServiceType = "carCarrier" | "multimodal" | "chinaImport" | "dealer" | "other";
+type PaymentType = "unspecified" | "cash" | "bankNoVat" | "bankVat";
 
 interface FormData {
+  serviceType: ServiceType;
   from: string;
   to: string;
   carModel: string;
   carYear: string;
   driveStatus: DriveStatus;
   readyDate: string;
+  paymentType: PaymentType;
   name: string;
   phone: string;
   comment: string;
+  consent: boolean;
 }
 
 interface FormErrors {
@@ -27,10 +32,11 @@ interface FormErrors {
   carModel?: string;
   name?: string;
   phone?: string;
+  consent?: string;
 }
 
 // Поля, по которым ведётся валидация и отметка touched
-const VALIDATED_FIELDS: (keyof FormErrors)[] = ["from", "to", "carModel", "name", "phone"];
+const VALIDATED_FIELDS: (keyof FormErrors)[] = ["from", "to", "carModel", "name", "phone", "consent"];
 
 const DRIVE_OPTIONS: { value: DriveStatus; label: string }[] = [
   { value: "uncertain", label: "Нужно уточнить" },
@@ -38,16 +44,34 @@ const DRIVE_OPTIONS: { value: DriveStatus; label: string }[] = [
   { value: "no", label: "Нет, не на ходу" },
 ];
 
+const SERVICE_OPTIONS: { value: ServiceType; label: string }[] = [
+  { value: "carCarrier", label: "Перевозка автовозом" },
+  { value: "multimodal", label: "Мультимодальная перевозка" },
+  { value: "chinaImport", label: "Доставка авто из Китая" },
+  { value: "dealer", label: "Перевозка для дилера" },
+  { value: "other", label: "Другая задача" },
+];
+
+const PAYMENT_OPTIONS: { value: PaymentType; label: string }[] = [
+  { value: "unspecified", label: "Пока не выбрано" },
+  { value: "cash", label: "Наличные" },
+  { value: "bankNoVat", label: "Безнал без НДС" },
+  { value: "bankVat", label: "Безнал с НДС" },
+];
+
 const INITIAL_DATA: FormData = {
+  serviceType: "carCarrier",
   from: "",
   to: "",
   carModel: "",
   carYear: "",
   driveStatus: "uncertain",
   readyDate: "",
+  paymentType: "unspecified",
   name: "",
   phone: "",
   comment: "",
+  consent: false,
 };
 
 function validateForm(data: FormData): FormErrors {
@@ -76,6 +100,9 @@ function validateForm(data: FormData): FormErrors {
   } else if (!/^[\d\s\+\-\(\)]{10,18}$/.test(data.phone.trim())) {
     errors.phone = "Введите корректный номер телефона";
   }
+  if (!data.consent) {
+    errors.consent = "Подтвердите согласие на обработку данных";
+  }
   return errors;
 }
 
@@ -87,12 +114,20 @@ export default function Calculator() {
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleChange = (field: keyof FormData, value: string) => {
+  const handleChange = (field: Exclude<keyof FormData, "consent">, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (touched[field]) {
       const newErrors = validateForm({ ...formData, [field]: value });
       setErrors((prev) => ({ ...prev, [field]: newErrors[field as keyof FormErrors] }));
     }
+  };
+
+  const handleConsentChange = (value: boolean) => {
+    const nextData = { ...formData, consent: value };
+    setFormData(nextData);
+    setTouched((prev) => ({ ...prev, consent: true }));
+    const newErrors = validateForm(nextData);
+    setErrors((prev) => ({ ...prev, consent: newErrors.consent }));
   };
 
   const handleBlur = (field: keyof FormErrors) => {
@@ -109,17 +144,29 @@ export default function Calculator() {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
+    const searchParams = new URLSearchParams(window.location.search);
+    const getParam = (name: string) => searchParams.get(name)?.trim() || null;
+
     // Собранная заявка для отправки на бэкенд (POST /api/leads → Telegram).
     const leadData = {
+      serviceType: formData.serviceType,
       from: formData.from.trim(),
       to: formData.to.trim(),
       carModel: formData.carModel.trim(),
       carYear: formData.carYear.trim() || null,
       driveStatus: formData.driveStatus,
       readyDate: formData.readyDate || null,
+      paymentType: formData.paymentType,
       name: formData.name.trim(),
       phone: formData.phone.trim(),
       comment: formData.comment.trim() || null,
+      consent: formData.consent,
+      sourcePage: `${window.location.pathname}${window.location.search}`,
+      utmSource: getParam("utm_source"),
+      utmMedium: getParam("utm_medium"),
+      utmCampaign: getParam("utm_campaign"),
+      utmContent: getParam("utm_content"),
+      utmTerm: getParam("utm_term"),
     };
 
     setSubmitError(null);
@@ -307,6 +354,34 @@ export default function Calculator() {
           />
         </div>
 
+        {/* Service type */}
+        <div>
+          <label style={labelStyle}>Тип услуги</label>
+          <select
+            className="field-dark"
+            value={formData.serviceType}
+            onChange={(e) => handleChange("serviceType", e.target.value)}
+          >
+            {SERVICE_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Payment type */}
+        <div>
+          <label style={labelStyle}>Форма оплаты</label>
+          <select
+            className="field-dark"
+            value={formData.paymentType}
+            onChange={(e) => handleChange("paymentType", e.target.value)}
+          >
+            {PAYMENT_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+        </div>
+
         {/* Name */}
         <div>
           <label style={labelStyle}>Ваше имя</label>
@@ -346,6 +421,33 @@ export default function Calculator() {
             rows={3}
             style={{ resize: "vertical", minHeight: "72px" }}
           />
+        </div>
+
+        {/* Consent */}
+        <div style={{ gridColumn: "1 / -1" }}>
+          <label
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "0.75rem",
+              color: "#AAB3C2",
+              fontSize: "0.75rem",
+              lineHeight: 1.5,
+              fontFamily: "'Inter', sans-serif",
+              cursor: "pointer",
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={formData.consent}
+              onChange={(e) => handleConsentChange(e.target.checked)}
+              style={{ marginTop: "0.15rem" }}
+            />
+            <span>
+              Согласен на обработку персональных данных для расчёта стоимости и связи по заявке.
+            </span>
+          </label>
+          {errors.consent && touched.consent && <p style={errorStyle}>{errors.consent}</p>}
         </div>
 
         {/* Submit */}
