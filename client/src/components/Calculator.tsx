@@ -85,6 +85,7 @@ export default function Calculator() {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -108,8 +109,7 @@ export default function Calculator() {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    // Собранная заявка для последующей отправки в API (бэкенд пока не подключён).
-    // leadData будет передаваться менеджеру для ориентировочного расчёта.
+    // Собранная заявка для отправки на бэкенд (POST /api/leads → Telegram).
     const leadData = {
       from: formData.from.trim(),
       to: formData.to.trim(),
@@ -122,13 +122,23 @@ export default function Calculator() {
       comment: formData.comment.trim() || null,
     };
 
+    setSubmitError(null);
     setSubmitting(true);
-    // TODO: заменить на реальную отправку leadData в API
-    // eslint-disable-next-line no-console
-    console.log("leadData", leadData);
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    setSubmitting(false);
-    setSuccess(true);
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(leadData),
+      });
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      setSuccess(true);
+    } catch {
+      setSubmitError("Не удалось отправить заявку. Позвоните нам или попробуйте ещё раз.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (success) {
@@ -358,6 +368,9 @@ export default function Calculator() {
               </>
             )}
           </button>
+          {submitError && (
+            <p style={{ ...errorStyle, marginTop: "0.75rem", textAlign: "center" }}>{submitError}</p>
+          )}
           <p style={{ color: "#AAB3C2", fontSize: "0.75rem", marginTop: "0.75rem", textAlign: "center", lineHeight: 1.6, fontFamily: "'Inter', sans-serif" }}>
             Расчёт предварительный. Окончательную стоимость менеджер подтвердит после проверки маршрута, состояния автомобиля, даты отправки и наличия места на автовозе.
           </p>
