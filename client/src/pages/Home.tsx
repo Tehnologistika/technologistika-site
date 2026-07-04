@@ -4,6 +4,7 @@
  * Sections: Hero, Stats, Services, Calculator, Advantages, Technology, Brand Story, Testimonials, CTA
  */
 import { useEffect, useRef, useState } from "react";
+import IntroSplash, { shouldShowIntro } from "@/components/IntroSplash";
 import { Link } from "wouter";
 import { ArrowRight, Shield, Clock, MapPin, Truck, Globe, Building2, Network, FileText, Send, ChevronRight, Star, Phone } from "lucide-react";
 import Header from "@/components/Header";
@@ -67,6 +68,7 @@ const advantageIcons: Record<string, React.ReactNode> = {
 };
 
 export default function Home() {
+  const [showIntro, setShowIntro] = useState(() => shouldShowIntro());
   const heroSection = useInView(0.1);
   const statsSection = useInView(0.2);
   const servicesSection = useInView(0.1);
@@ -84,6 +86,7 @@ export default function Home() {
 
   return (
     <div style={{ backgroundColor: "#0F1115", minHeight: "100vh" }}>
+      {showIntro && <IntroSplash onComplete={() => setShowIntro(false)} />}
       <Header />
 
       {/* ═══════════════════════════════════════════════
