@@ -1,20 +1,22 @@
 /**
- * IntroSplash — Premium intro splash screen for ТехноЛогистика
+ * IntroSplash — Ultra-modern intro animation for ТехноЛогистика
+ *
+ * NO video files. Pure CSS/JS animation. Works perfectly on any screen.
  *
  * Sequence:
- * 1. Logo reveal phase (3.5s): white screen, B&W logo fades in with eagle cry sound
- * 2. Tech video phase: existing intro-tech-video.mp4 plays fullscreen (object-fit: cover)
- * 3. Fade out and reveal the site
+ * Phase 1 — "Production Logo" (4.5s):
+ *   Black screen → logo materializes with glow particles + eagle cry
+ *   Text "ТЕХНОЛОГИСТИКА" appears below with subtle tracking animation
  *
- * Behavior:
- * - Shows only on the home page, once per session.
- * - Uses sessionStorage to avoid repeat within a session.
- * - Uses localStorage to enforce a 3-hour cooldown.
- * - Video autoplays muted with playsInline — no play button needed.
- * - Failsafe: max 8 seconds total, then close regardless.
- * - If video fails to load/play — close immediately, don't block site.
- * - Always-visible "Пропустить" button.
- * - Respects prefers-reduced-motion.
+ * Phase 2 — "Site Intro" (5s):
+ *   Futuristic grid/lines animation with company tagline
+ *   Particle field + light streaks suggesting speed/technology
+ *
+ * Phase 3 — "Reveal" (1s):
+ *   Headlight beam effect → site fades in underneath
+ *
+ * Total: ~10.5s max, failsafe at 12s
+ * Skip button always visible
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import logoSrc from "@/assets/technologistika-logo-transparent.png";
@@ -23,39 +25,31 @@ import "./IntroSplash.css";
 const SESSION_KEY = "technologistikaIntroShownSession";
 const LAST_SHOWN_KEY = "technologistikaIntroLastShownAt";
 const COOLDOWN_MS = 10800000; // 3 hours
-const LOGO_DURATION_MS = 3500; // Logo phase duration
-const FAILSAFE_TIMEOUT_MS = 8000; // Max total duration
 
-/** Determine whether the splash should be displayed */
+const PHASE1_DURATION = 4500;
+const PHASE2_DURATION = 5000;
+const FADEOUT_DURATION = 1000;
+const FAILSAFE_MS = 12000;
+
 export function shouldShowIntro(): boolean {
   try {
-    if (sessionStorage.getItem(SESSION_KEY) === "true") {
-      return false;
-    }
+    if (sessionStorage.getItem(SESSION_KEY) === "true") return false;
     const lastShown = localStorage.getItem(LAST_SHOWN_KEY);
-    if (lastShown) {
-      const elapsed = Date.now() - Number(lastShown);
-      if (elapsed < COOLDOWN_MS) {
-        return false;
-      }
-    }
+    if (lastShown && Date.now() - Number(lastShown) < COOLDOWN_MS) return false;
     return true;
   } catch {
     return false;
   }
 }
 
-/** Mark the intro as shown */
 function markShown(): void {
   try {
     sessionStorage.setItem(SESSION_KEY, "true");
     localStorage.setItem(LAST_SHOWN_KEY, String(Date.now()));
-  } catch {
-    // Silently ignore storage errors
-  }
+  } catch {}
 }
 
-type Phase = "logo" | "tech-video" | "fadeout" | "done";
+type Phase = "logo" | "site-intro" | "reveal" | "done";
 
 interface IntroSplashProps {
   onComplete: () => void;
@@ -64,175 +58,239 @@ interface IntroSplashProps {
 export default function IntroSplash({ onComplete }: IntroSplashProps) {
   const [phase, setPhase] = useState<Phase>("logo");
   const audioRef = useRef<HTMLAudioElement>(null);
-  const techVideoRef = useRef<HTMLVideoElement>(null);
-  const logoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const failsafeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const closedRef = useRef(false);
+  const animFrameRef = useRef<number>(0);
 
-  // Close handler — ensures we only close once
   const handleClose = useCallback(() => {
     if (closedRef.current) return;
     closedRef.current = true;
-
-    // Stop audio
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-    // Stop video
-    if (techVideoRef.current) {
-      techVideoRef.current.pause();
-    }
-    // Clear timers
-    if (logoTimerRef.current) clearTimeout(logoTimerRef.current);
-    if (failsafeTimerRef.current) clearTimeout(failsafeTimerRef.current);
-
-    setPhase("fadeout");
+    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    setPhase("reveal");
     setTimeout(() => {
       setPhase("done");
       onComplete();
-    }, 600);
+    }, FADEOUT_DURATION);
   }, [onComplete]);
 
-  // Mark as shown on mount
-  useEffect(() => {
-    markShown();
-  }, []);
+  useEffect(() => { markShown(); }, []);
 
-  // Failsafe: close after max duration no matter what
+  // Failsafe
   useEffect(() => {
-    failsafeTimerRef.current = setTimeout(() => {
-      handleClose();
-    }, FAILSAFE_TIMEOUT_MS);
-
-    return () => {
-      if (failsafeTimerRef.current) clearTimeout(failsafeTimerRef.current);
-    };
+    const t = setTimeout(handleClose, FAILSAFE_MS);
+    return () => clearTimeout(t);
   }, [handleClose]);
 
-  // Check reduced motion preference — skip intro
+  // Reduced motion
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) {
-      setTimeout(() => handleClose(), 500);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTimeout(handleClose, 500);
     }
   }, [handleClose]);
 
-  // Phase 1: Logo reveal with eagle sound
+  // Phase transitions
   useEffect(() => {
-    // Try to play eagle cry audio
+    // Play eagle sound
     if (audioRef.current) {
-      audioRef.current.volume = 0.7;
-      audioRef.current.play().catch(() => {
-        // Browser blocked audio — silently ignore
+      audioRef.current.volume = 0.65;
+      audioRef.current.play().catch(() => {});
+    }
+
+    const t1 = setTimeout(() => {
+      if (!closedRef.current) setPhase("site-intro");
+    }, PHASE1_DURATION);
+
+    const t2 = setTimeout(() => {
+      if (!closedRef.current) handleClose();
+    }, PHASE1_DURATION + PHASE2_DURATION);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [handleClose]);
+
+  // Particle canvas for Phase 2
+  useEffect(() => {
+    if (phase !== "site-intro") return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth * window.devicePixelRatio;
+      canvas.height = window.innerHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const w = () => window.innerWidth;
+    const h = () => window.innerHeight;
+
+    // Particles
+    const particles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number; color: string }[] = [];
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * w(),
+        y: Math.random() * h(),
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 1.5,
+        size: Math.random() * 2 + 0.5,
+        alpha: Math.random() * 0.6 + 0.2,
+        color: Math.random() > 0.5 ? "#4FD1FF" : "#ffffff",
       });
     }
 
-    // After logo animation, transition to tech video
-    logoTimerRef.current = setTimeout(() => {
-      if (!closedRef.current) {
-        setPhase("tech-video");
+    // Light streaks
+    const streaks: { x: number; y: number; len: number; speed: number; alpha: number }[] = [];
+    for (let i = 0; i < 12; i++) {
+      streaks.push({
+        x: Math.random() * w(),
+        y: Math.random() * h(),
+        len: Math.random() * 120 + 60,
+        speed: Math.random() * 6 + 3,
+        alpha: Math.random() * 0.3 + 0.1,
+      });
+    }
+
+    let startTime = Date.now();
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / PHASE2_DURATION, 1);
+
+      ctx.clearRect(0, 0, w(), h());
+
+      // Grid lines
+      ctx.strokeStyle = `rgba(79, 209, 255, ${0.06 * (1 - progress * 0.5)})`;
+      ctx.lineWidth = 0.5;
+      const gridSize = 60;
+      const offsetX = (elapsed * 0.02) % gridSize;
+      for (let x = -gridSize + offsetX; x < w(); x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h());
+        ctx.stroke();
       }
-    }, LOGO_DURATION_MS);
+      const offsetY = (elapsed * 0.015) % gridSize;
+      for (let y = -gridSize + offsetY; y < h(); y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w(), y);
+        ctx.stroke();
+      }
+
+      // Particles
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = w();
+        if (p.x > w()) p.x = 0;
+        if (p.y < 0) p.y = h();
+        if (p.y > h()) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha * (1 - progress * 0.3);
+        ctx.fill();
+      }
+
+      // Light streaks (horizontal speed lines)
+      ctx.globalAlpha = 1;
+      for (const s of streaks) {
+        s.x += s.speed;
+        if (s.x > w() + s.len) {
+          s.x = -s.len;
+          s.y = Math.random() * h();
+        }
+        const grad = ctx.createLinearGradient(s.x, s.y, s.x + s.len, s.y);
+        grad.addColorStop(0, `rgba(79, 209, 255, 0)`);
+        grad.addColorStop(0.5, `rgba(79, 209, 255, ${s.alpha})`);
+        grad.addColorStop(1, `rgba(255, 255, 255, 0)`);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x + s.len, s.y);
+        ctx.stroke();
+      }
+
+      ctx.globalAlpha = 1;
+      animFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
-      if (logoTimerRef.current) clearTimeout(logoTimerRef.current);
+      window.removeEventListener("resize", resize);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Phase 2: Tech video autoplay
-  useEffect(() => {
-    if (phase !== "tech-video") return;
-
-    const video = techVideoRef.current;
-    if (!video) {
-      // Video element not available — close
-      handleClose();
-      return;
-    }
-
-    // Attempt to play the video
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay blocked or video failed — close splash immediately
-        handleClose();
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase]);
-
-  const handleTechVideoEnded = useCallback(() => {
-    handleClose();
-  }, [handleClose]);
-
-  const handleTechVideoError = useCallback(() => {
-    handleClose();
-  }, [handleClose]);
 
   if (phase === "done") return null;
 
-  const isFadingOut = phase === "fadeout";
-
   return (
-    <div
-      className={`intro-splash ${isFadingOut ? "intro-splash--fadeout" : ""}`}
-      aria-label="Intro splash screen"
-      role="dialog"
-      aria-modal="true"
-    >
-      {/* Eagle cry audio — plays during logo phase */}
-      <audio
-        ref={audioRef}
-        src="/intro/intro-audio.mp3"
-        preload="auto"
-      />
+    <div className={`intro-splash ${phase === "reveal" ? "intro-splash--reveal" : ""}`}>
+      {/* Eagle cry audio */}
+      <audio ref={audioRef} src="/intro/intro-audio.mp3" preload="auto" />
 
-      {/* ═══ PHASE 1: Logo Reveal ═══ */}
-      {phase === "logo" && (
-        <div className="intro-splash__logo-phase">
-          <div className="intro-splash__bg" />
-          <div className="intro-splash__logo-content">
-            <div className="intro-splash__logo-wrap intro-splash__logo-wrap--animate">
-              <img
-                src={logoSrc}
-                alt="ТехноЛогистика"
-                className="intro-splash__logo"
-              />
-            </div>
-            <div className="intro-splash__text-wrap">
-              <h1 className="intro-splash__title">ТехноЛогистика</h1>
-              <p className="intro-splash__subtitle">Маршрут к вершине</p>
-            </div>
+      {/* ═══ PHASE 1: Production Logo ═══ */}
+      <div className={`intro-phase intro-phase--logo ${phase !== "logo" ? "intro-phase--exit" : ""}`}>
+        {/* Radial glow behind logo */}
+        <div className="intro-logo-glow" />
+        {/* Floating particles around logo */}
+        <div className="intro-logo-particles">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <span key={i} className="intro-particle" style={{
+              '--delay': `${Math.random() * 2}s`,
+              '--x': `${(Math.random() - 0.5) * 200}px`,
+              '--y': `${(Math.random() - 0.5) * 200}px`,
+              '--duration': `${2 + Math.random() * 2}s`,
+            } as React.CSSProperties} />
+          ))}
+        </div>
+        {/* Logo */}
+        <div className="intro-logo-container">
+          <img src={logoSrc} alt="ТС" className="intro-logo-img" />
+        </div>
+        {/* Company name */}
+        <div className="intro-logo-text">
+          <span className="intro-logo-title">ТЕХНОЛОГИСТИКА</span>
+          <span className="intro-logo-divider" />
+        </div>
+      </div>
+
+      {/* ═══ PHASE 2: Site Intro ═══ */}
+      <div className={`intro-phase intro-phase--site ${phase === "site-intro" ? "intro-phase--active" : ""}`}>
+        <canvas ref={canvasRef} className="intro-canvas" />
+        <div className="intro-site-content">
+          <div className="intro-site-tagline">
+            <span className="intro-site-tagline-line">Маршрут</span>
+            <span className="intro-site-tagline-line intro-site-tagline-line--accent">к вершине</span>
+          </div>
+          <div className="intro-site-subtitle">
+            Перевозка автомобилей по всей России
+          </div>
+          <div className="intro-site-tech-badge">
+            <span className="intro-badge-dot" />
+            AI-Powered Logistics
           </div>
         </div>
+        {/* Horizontal scan line */}
+        <div className="intro-scanline" />
+      </div>
+
+      {/* ═══ Headlight reveal overlay ═══ */}
+      {phase === "reveal" && (
+        <div className="intro-headlight-reveal" />
       )}
 
-      {/* ═══ PHASE 2: Tech Video — fullscreen, no controls ═══ */}
-      {phase === "tech-video" && (
-        <div className="intro-splash__video-phase">
-          <video
-            ref={techVideoRef}
-            className="intro-splash__video"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            onEnded={handleTechVideoEnded}
-            onError={handleTechVideoError}
-          >
-            <source src="/intro/intro-tech-video.mp4" type="video/mp4" />
-          </video>
-        </div>
-      )}
-
-      {/* ═══ Skip button — always visible ═══ */}
-      <button
-        className="intro-splash__btn intro-splash__btn--skip"
-        onClick={handleClose}
-        aria-label="Пропустить"
-      >
+      {/* Skip button */}
+      <button className="intro-skip-btn" onClick={handleClose} aria-label="Пропустить">
         Пропустить
       </button>
     </div>
